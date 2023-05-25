@@ -1,2 +1,2 @@
-# fullstack-customer-registration
+# Fullstack Project
 Customer registration control application.
