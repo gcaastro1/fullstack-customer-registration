@@ -1,10 +1,10 @@
 import { contacts } from 'src/database/db';
-import { ContactsRepository } from './contacts.repository';
-import { Contact } from '../entities/contact.entity';
-import { UpdateContactDto } from '../dto/update-contact.dto';
-import { CreateContactDto } from '../dto/create-contact.dto';
+import { ContactsRepository } from '../contacts.repository';
+import { Contact } from '../../entities/contact.entity';
+import { UpdateContactDto } from '../../dto/update-contact.dto';
+import { CreateContactDto } from '../../dto/create-contact.dto';
 
-export class CustomersInMemoryRepository implements ContactsRepository {
+export class ContactsInMemoryRepository implements ContactsRepository {
   create(data: CreateContactDto): Contact | Promise<Contact> {
     const newContact = new Contact();
     const date = Date.now();

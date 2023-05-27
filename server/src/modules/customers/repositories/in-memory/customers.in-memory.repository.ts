@@ -1,8 +1,8 @@
 import { customers } from 'src/database/db';
-import { CreateCustomerDto } from '../dto/create-customer.dto';
-import { UpdateCustomerDto } from '../dto/update-customer.dto';
-import { Customer } from '../entities/customer.entity';
-import { CustomersRepository } from './customers.repository';
+import { CreateCustomerDto } from '../../dto/create-customer.dto';
+import { UpdateCustomerDto } from '../../dto/update-customer.dto';
+import { Customer } from '../../entities/customer.entity';
+import { CustomersRepository } from '../customers.repository';
 
 export class CustomersInMemoryRepository implements CustomersRepository {
   create(data: CreateCustomerDto): Customer | Promise<Customer> {

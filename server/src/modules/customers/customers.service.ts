@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { CustomersRepository } from './repositories/customers.repository';
@@ -6,23 +6,49 @@ import { CustomersRepository } from './repositories/customers.repository';
 @Injectable()
 export class CustomersService {
   constructor(private customersRepository: CustomersRepository) {}
-  create(createCustomerDto: CreateCustomerDto) {
-    return this.customersRepository.create(createCustomerDto);
+  async create(createCustomerDto: CreateCustomerDto) {
+    const customer = await this.customersRepository.create(createCustomerDto);
+    return customer;
   }
 
-  findAll() {
-    return this.customersRepository.findAll();
+  async findAll() {
+    const customers = await this.customersRepository.findAll();
+    return customers;
   }
 
-  findOne(id: string) {
-    return this.customersRepository.findOne(id);
+  async findOne(id: string) {
+    const findCustomer = await this.customersRepository.findOne(id);
+
+    if (!findCustomer) {
+      throw new NotFoundException('customer not found');
+    }
+
+    return findCustomer;
   }
 
-  update(id: string, updateCustomerDto: UpdateCustomerDto) {
-    return this.customersRepository.update(id, updateCustomerDto);
+  async update(id: string, updateCustomerDto: UpdateCustomerDto) {
+    const findCustomer = await this.customersRepository.findOne(id);
+
+    if (!findCustomer) {
+      throw new NotFoundException('customer not found');
+    }
+
+    const customer = await this.customersRepository.update(
+      id,
+      updateCustomerDto,
+    );
+
+    return customer;
   }
 
-  remove(id: string) {
-    return this.customersRepository.delete(id);
+  async remove(id: string) {
+    const findCustomer = await this.customersRepository.findOne(id);
+
+    if (!findCustomer) {
+      throw new NotFoundException('customer not found');
+    }
+
+    await this.customersRepository.delete(id);
+    return;
   }
 }

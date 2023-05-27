@@ -6,6 +6,7 @@ export class Contact {
   email: string;
   phone: string;
   createdAt: string;
+  customerId: string;
 
   constructor() {
     this.id = randomUUID();
