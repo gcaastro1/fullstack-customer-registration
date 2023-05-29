@@ -10,7 +10,7 @@ import { CustomersPrismaRepository } from './repositories/prisma/customers.prism
   providers: [
     CustomersService,
     PrismaService,
-    { provide: CustomersRepository, useClass: CustomersPrismaRepository },
+    // { provide: CustomersRepository, useClass: CustomersPrismaRepository },
   ],
   exports: [CustomersService],
 })

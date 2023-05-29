@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { PrismaService } from './database/prisma.service';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
@@ -12,6 +13,9 @@ async function bootstrap() {
       transformOptions: { groups: ['transform'] },
     }),
   );
+
+  const prismaService = app.get(PrismaService);
+  await prismaService.enableShutdownHooks(app);
 
   await app.listen(3000);
 }

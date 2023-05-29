@@ -20,7 +20,10 @@ export class CustomersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   create(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.customersService.create(createCustomerDto);
+    return this.customersService.create(
+      createCustomerDto,
+      createCustomerDto.email,
+    );
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

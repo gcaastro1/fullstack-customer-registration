@@ -1,8 +1,8 @@
+import { PrismaService } from 'src/database/prisma.service';
 import { CreateCustomerDto } from '../../dto/create-customer.dto';
 import { UpdateCustomerDto } from '../../dto/update-customer.dto';
 import { Customer } from '../../entities/customer.entity';
 import { CustomersRepository } from '../customers.repository';
-import { PrismaService } from 'src/database/prisma.service';
 import { plainToInstance } from 'class-transformer';
 
 export class CustomersPrismaRepository implements CustomersRepository {
