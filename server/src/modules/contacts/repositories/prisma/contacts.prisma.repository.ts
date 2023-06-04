@@ -11,7 +11,7 @@ export class ContactsPrismaRepository implements ContactsRepository {
     const contact = new Contact();
     const date = Date.now();
 
-    Object.assign(Contact, {
+    Object.assign(contact, {
       ...data,
       createdAt: new Date(date),
     });

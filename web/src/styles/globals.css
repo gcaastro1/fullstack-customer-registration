@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--background-start-rgb));
+  background-color: rgb(15 23 42);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+@layer components {
+  .body {
+    @apply flex min-h-screen flex-col items-center justify-between p-4 bg-slate-900;
+  }
+
+  .title {
+    @apply text-3xl font-bold tracking-tight text-gray-300 sm:text-4xl;
+  }
+
+  .input {
+    @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
+  }
+
+  .input-label {
+    @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+  }
+
+  .modal-wrapper {
+    @apply fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center;
+  }
+
+  .modal-header {
+    @apply flex flex-row justify-between w-full border-b-2 border-gray-200 pb-2;
+  }
+
+  .button-primary {
+    @apply text-white bg-blue-600 hover:bg-blue-800 focus:outline-none font-medium text-sm rounded-2xl px-5 py-2.5 text-center;
+  }
+
+  .form {
+    @apply w-full mt-4 bg-gray-100 py-8 px-4 rounded-2xl flex flex-col gap-4;
+  }
+
+  .text-error {
+    @apply text-red-500 text-sm;
+  }
+}

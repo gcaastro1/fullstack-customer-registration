@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CustomersController } from './customers.controller';
-import { CustomersRepository } from './repositories/customers.repository';
 import { PrismaService } from 'src/database/prisma.service';
+import { CustomersRepository } from './repositories/customers.repository';
 import { CustomersPrismaRepository } from './repositories/prisma/customers.prisma.repository';
 
 @Module({
@@ -10,7 +10,7 @@ import { CustomersPrismaRepository } from './repositories/prisma/customers.prism
   providers: [
     CustomersService,
     PrismaService,
-    // { provide: CustomersRepository, useClass: CustomersPrismaRepository },
+    { provide: CustomersRepository, useClass: CustomersPrismaRepository },
   ],
   exports: [CustomersService],
 })

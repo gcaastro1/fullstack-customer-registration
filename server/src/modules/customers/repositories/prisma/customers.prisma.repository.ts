@@ -4,10 +4,16 @@ import { UpdateCustomerDto } from '../../dto/update-customer.dto';
 import { Customer } from '../../entities/customer.entity';
 import { CustomersRepository } from '../customers.repository';
 import { plainToInstance } from 'class-transformer';
+import { ConflictException, Injectable } from '@nestjs/common';
 
+@Injectable()
 export class CustomersPrismaRepository implements CustomersRepository {
   constructor(private prisma: PrismaService) {}
   async create(data: CreateCustomerDto): Promise<Customer> {
+    const findCustomer = await this.findByEmail(data.email);
+
+    if (findCustomer) throw new ConflictException('email already exists.');
+
     const customer = new Customer();
     const date = Date.now();
     Object.assign(customer, {
@@ -15,29 +21,43 @@ export class CustomersPrismaRepository implements CustomersRepository {
       createdAt: new Date(date),
     });
 
-    const newUser = await this.prisma.customer.create({
+    const newCustomer = await this.prisma.customer.create({
       data: { ...customer },
     });
 
-    return plainToInstance(Customer, newUser);
+    return plainToInstance(Customer, newCustomer);
   }
 
   async findAll(): Promise<Customer[]> {
-    const customers: Customer[] = await this.prisma.customer.findMany();
+    const customers = await this.prisma.customer.findMany();
 
     return plainToInstance(Customer, customers);
   }
 
   async findOne(id: string): Promise<Customer> {
-    const customer: Customer = await this.prisma.customer.findUnique({
+    const customer = await this.prisma.customer.findUnique({
       where: { id },
+      include: {
+        contacts: true,
+      },
     });
 
     return plainToInstance(Customer, customer);
   }
 
+  async findByEmail(email: string): Promise<Customer> {
+    const customer = await this.prisma.customer.findUnique({
+      where: { email },
+    });
+    return customer;
+  }
+
   async update(id: string, data: UpdateCustomerDto): Promise<Customer> {
-    const customer: Customer = await this.prisma.customer.update({
+    if (data.email) {
+      const findCustomer = await this.findByEmail(data.email);
+      if (findCustomer) throw new ConflictException('email already exists.');
+    }
+    const customer = await this.prisma.customer.update({
       where: { id },
       data: { ...data },
     });
