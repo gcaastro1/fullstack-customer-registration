@@ -27,7 +27,7 @@ export const UpdateCustomerForm = ({ customer }: UpdateCustomerFormProps) => {
     },
   });
 
-  const { update } = useCustomer();
+  const { update, deleteCustomer } = useCustomer();
 
   const onSubmit: SubmitHandler<updateCustomerData> = (data) => update(data);
 
@@ -97,7 +97,7 @@ export const UpdateCustomerForm = ({ customer }: UpdateCustomerFormProps) => {
         <button className={'button-primary w-full'} type="submit">
           Salvar
         </button>
-        <button className={'button-danger w-full'} type="submit">
+        <button className={'button-danger w-full'} type="button" onClick={() => deleteCustomer()}>
           Deletar conta
         </button>
       </div>
