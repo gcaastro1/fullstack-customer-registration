@@ -13,10 +13,10 @@ export const Modal = ({ onClose, title, children }: IModal) => {
     if (e.target.id === 'wrapper') onClose();
   };
 
-  return createPortal(
+  return (
     <div className="modal-wrapper" id="wrapper" onClick={handleClose}>
       <div className="w-[600px]">
-        <div className="bg-white p-4 rounded">
+        <div className="bg-white p-4 rounded-2xl">
           <div className="modal-header">
             <p className="font-bold text-gray-800">{title}</p>
             <button
@@ -29,7 +29,6 @@ export const Modal = ({ onClose, title, children }: IModal) => {
           {children}
         </div>
       </div>
-    </div>,
-    document.body
+    </div>
   );
 };

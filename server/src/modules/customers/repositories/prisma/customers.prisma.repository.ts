@@ -54,8 +54,17 @@ export class CustomersPrismaRepository implements CustomersRepository {
 
   async update(id: string, data: UpdateCustomerDto): Promise<Customer> {
     if (data.email) {
-      const findCustomer = await this.findByEmail(data.email);
-      if (findCustomer) throw new ConflictException('email already exists.');
+      const findCustomer = await this.prisma.customer.findUnique({
+        where: { id },
+      });
+      if (findCustomer.email === data.email) {
+        if (id == findCustomer.id) delete data.email;
+        else if (findCustomer) {
+          console.log(findCustomer);
+          console.log(id);
+          throw new ConflictException('email already exists.');
+        }
+      }
     }
     const customer = await this.prisma.customer.update({
       where: { id },

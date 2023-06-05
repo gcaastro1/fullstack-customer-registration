@@ -4,7 +4,9 @@ import { ContactsRepository } from '../contacts.repository';
 import { Contact } from '../../entities/contact.entity';
 import { CreateContactDto } from '../../dto/create-contact.dto';
 import { UpdateContactDto } from '../../dto/update-contact.dto';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class ContactsPrismaRepository implements ContactsRepository {
   constructor(private prisma: PrismaService) {}
   async create(data: CreateContactDto): Promise<Contact> {

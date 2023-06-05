@@ -18,7 +18,7 @@ export const LoginForm = ({}) => {
   const onSubmit: SubmitHandler<loginData> = (data) => login(data);
 
   return (
-    <form className={'form'} noValidate onSubmit={handleSubmit(onSubmit)}>
+    <form className={'container'} noValidate onSubmit={handleSubmit(onSubmit)}>
       <div className={'w-full px-3 mb-6'}>
         <p className={'font-bold text-2xl text-center'}>Login</p>
       </div>

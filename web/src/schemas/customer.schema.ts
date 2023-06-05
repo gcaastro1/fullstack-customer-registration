@@ -7,8 +7,8 @@ export const customerSchema = z.object({
   email: z.string().email('E-mail invalido.'),
   password: z.string().nonempty('Senha é obrigatória.'),
   phone: z.string().nonempty('Telefone é obrigatório.'),
-  createdAt: z.string().optional(),
-  contacts: contactSchema.array().optional(),
+  createdAt: z.string(),
+  contacts: contactSchema.array(),
 });
 
 export type customerData = z.infer<typeof customerSchema>;
@@ -30,5 +30,11 @@ export const registerSchema = customerSchema
     id: true,
   });
 
+export const updateCustomertSchema = registerSchema
+  .partial()
+  .omit({ password: true })
+  .extend({ password: z.string().optional() });
+
 export type loginData = z.infer<typeof loginSchema>;
 export type registerData = z.infer<typeof registerSchema>;
+export type updateCustomerData = z.infer<typeof updateCustomertSchema>;

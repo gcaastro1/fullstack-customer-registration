@@ -1,9 +1,9 @@
 import { loginData, registerData } from '@/schemas/customer.schema';
 import api from '@/services/api';
 import { useRouter } from 'next/router';
-import { setCookie } from 'nookies';
 import { ReactNode, useContext, createContext } from 'react';
 import Toast from '@/components/toast';
+import { setCookie, destroyCookie } from 'nookies';
 
 interface Props {
   children: ReactNode;
@@ -12,6 +12,7 @@ interface Props {
 interface AuthProviderData {
   register: (registerData: registerData) => void;
   login: (loginData: loginData) => void;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthProviderData>({} as AuthProviderData);
@@ -48,12 +49,12 @@ export const AuthProvider = ({ children }: Props) => {
       .then((res) => {
         setCookie(null, 'myconts.token', res.data.token, {
           maxAge: 60 * 30,
-          path: '/customers',
+          path: '/',
         });
       })
       .then(() => {
+        router.push('/profile');
         Toast({ message: 'Login realizado com sucesso!', isSuccess: true });
-        router.push('/customers');
       })
       .catch((err) => {
         console.error(err);
@@ -64,8 +65,17 @@ export const AuthProvider = ({ children }: Props) => {
       });
   };
 
+  const logout = () => {
+    Toast({
+      message: 'Deslogado com sucesso.',
+      isSuccess: true,
+    });
+    destroyCookie(null, 'myconts.token');
+    router.push('/');
+  };
+
   return (
-    <AuthContext.Provider value={{ register, login }}>
+    <AuthContext.Provider value={{ register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

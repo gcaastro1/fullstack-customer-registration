@@ -6,6 +6,7 @@ import { AuthProvider } from '../contexts/authContext';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { CustomerProvider } from '@/contexts/customerContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,7 +26,9 @@ export default function App({ Component, pageProps }: AppProps) {
         theme="light"
       />
       <AuthProvider>
-        <Component {...pageProps} className={inter.className} />
+        <CustomerProvider>
+          <Component {...pageProps} className={inter.className} />
+        </CustomerProvider>
       </AuthProvider>
     </NextUIProvider>
   );

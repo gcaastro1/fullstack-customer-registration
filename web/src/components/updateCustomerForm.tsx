@@ -1,28 +1,38 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { registerData, registerSchema } from '../schemas/customer.schema';
+import {
+  customerData,
+  updateCustomerData,
+  updateCustomertSchema,
+} from '../schemas/customer.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '@/contexts/authContext';
+import { useCustomer } from '@/contexts/customerContext';
 
-export const RegisterForm = ({}) => {
+interface UpdateCustomerFormProps {
+  customer: customerData;
+}
+
+export const UpdateCustomerForm = ({ customer }: UpdateCustomerFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<registerData>({
+  } = useForm<updateCustomerData>({
     mode: 'onChange',
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(updateCustomertSchema),
+    defaultValues: {
+      name: customer.name,
+      email: customer.email,
+      phone: customer.phone,
+    },
   });
 
-  const { register: registerCustomer } = useAuth();
+  const { update } = useCustomer();
 
-  const onSubmit: SubmitHandler<registerData> = (data) =>
-    registerCustomer(data);
+  const onSubmit: SubmitHandler<updateCustomerData> = (data) => update(data);
 
   return (
     <form className={'container'} noValidate onSubmit={handleSubmit(onSubmit)}>
-      <div className={'w-full px-3 mb-6'}>
-        <p className={'font-bold text-2xl text-center'}>Cadastro</p>
-      </div>
       <div className={'w-full px-3'}>
         <label className="input-label" htmlFor="name">
           Nome
@@ -83,26 +93,12 @@ export const RegisterForm = ({}) => {
           <span className={'text-error'}>{errors.password.message}</span>
         )}
       </div>
-      <div className="w-full px-3">
-        <label className={'input-label'} htmlFor="password">
-          Confirmar senha
-        </label>
-        <input
-          className={'input'}
-          id="confirm_password"
-          type="password"
-          placeholder="Digite novamente sua senha."
-          {...register('confirm_password')}
-        />
-        {errors.confirm_password && (
-          <span className={'text-error'}>
-            {errors.confirm_password.message}
-          </span>
-        )}
-      </div>
-      <div className={'w-full px-3 mt-4'}>
+      <div className={'flex gap-2 w-full px-3 mt-4'}>
         <button className={'button-primary w-full'} type="submit">
-          Criar conta
+          Salvar
+        </button>
+        <button className={'button-danger w-full'} type="submit">
+          Deletar conta
         </button>
       </div>
     </form>

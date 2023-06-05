@@ -1,7 +1,8 @@
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { CaretLeft } from 'phosphor-react';
 import Link from 'next/link';
 import { LoginForm } from '@/components/loginForm';
+import nookies from 'nookies';
 
 const Login: NextPage = () => {
   return (
