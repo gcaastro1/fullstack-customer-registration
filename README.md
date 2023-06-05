@@ -4,7 +4,7 @@
 
 # Rota para documentação:
 
-Configuração - Siga os passos abaixo para configurar o ambiente de desenvolvimento e começar a usar a API:
+Configuração - Siga os passos dentro das pastas server/web para configurar o ambiente de desenvolvimento e começar a usar a API e o Front.
 
 ## **Tecnologias e bibliotecas**:
 
